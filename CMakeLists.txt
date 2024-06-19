@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.22.1)
+cmake_minimum_required(VERSION 3.28)
+set(CMAKE_CXX_SCAN_FOR_MODULES ON)
 
 if(POLICY CMP0135)
   # make the timestamps of ExternalProject_ADD match the download time
@@ -338,7 +339,7 @@ if (STDEXEC_ENABLE_NUMA)
 endif()
 
 set(SYSTEM_CONTEXT_SOURCES src/system_context/system_context.cpp)
-add_library(system_context STATIC ${SYSTEM_CONTEXT_SOURCES})
+add_library(system_context STATIC ${SYSTEM_CONTEXT_SOURCES} "modules_demo/main.cpp")
 target_include_directories(system_context PRIVATE
                            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>
                            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
@@ -403,6 +404,9 @@ endif()
 if(STDEXEC_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
+
+add_subdirectory(modules)
+add_subdirectory(modules_demo)
 
 ##############################################################################
 # Install targets ------------------------------------------------------------
